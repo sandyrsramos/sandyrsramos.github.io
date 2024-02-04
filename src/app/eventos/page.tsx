@@ -1,12 +1,16 @@
-import styles from '../page.module.css'
-import { Typography } from '@mui/material'
+import styles from '../page.module.css';
+import { Container, Typography } from '@mui/material';
+import information from '../../../data/information';
 
 export default function Eventos() {
   return (
-    <main className={styles.main}>
+    <Container className={styles.main}>
       <Typography variant="h3">
-        WIP - Eventos
+        Eventos
       </Typography>
-    </main>
+      <Typography variant="subtitle1">
+        { information.eventPageDesc }
+      </Typography>
+    </Container>
   )
 }

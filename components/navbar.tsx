@@ -1,10 +1,9 @@
 "use client"
+import React, { useState } from "react";
+import Link from "next/link";
 import { AppBar, Box, IconButton, Toolbar, Typography, Menu, MenuItem, Button, Tooltip, Avatar } from "@mui/material";
 import { FlightTakeoff, Menu as MenuIcon } from "@mui/icons-material";
-import React, { useState } from "react";
-
-const pages = [{ title: "Eventos", url: "/eventos" }, { title: "Currículo", url: "/home" }];
-const socialPages = [{ title: "LinkedIn", url: "https://www.linkedin.com/in/sandyram0s/"}]
+import information from "../data/information";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -25,14 +24,14 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" component="nav" sx={{ color: 'inherit', backgroundColor: 'inherit', position: 'sticky' }}>
+    <AppBar position="static" component="nav" sx={{ color: 'inherit', backgroundColor: 'inherit', position: 'fixed' }}>
       <Toolbar disableGutters>
         <FlightTakeoff sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, ml: '2rem' }} />
         <Typography
           variant="h6"
           noWrap
           component="a"
-          href="#"
+          href="/"
           sx={{
             mr: 2,
             display: { xs: 'none', md: 'flex' },
@@ -43,12 +42,12 @@ const Navbar = () => {
             textDecoration: 'none'
           }}
         >
-          SR
+          {information.initials}
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
             size="large"
-            aria-label="sandy ramos profile pic"
+            aria-label="profile pic"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
@@ -74,9 +73,11 @@ const Navbar = () => {
               display: { xs: 'block', md: 'none' }
             }}
           >
-            {pages.map(({ title, url }) => (
-              <MenuItem key={title} onClick={() => console.log(url)}>
-                <Typography textAlign="center">{title}</Typography>
+            {information.pages.map(({ title, url }) => (
+              <MenuItem key={title}>
+                <Link href={url}>
+                  <Typography textAlign="center">{title}</Typography>
+                </Link>
               </MenuItem>
             ))}
           </Menu>
@@ -86,7 +87,7 @@ const Navbar = () => {
           variant="h5"
           noWrap
           component="a"
-          href="/home"
+          href="/"
           sx={{
             mr: 2,
             display: { xs: 'flex', md: 'none' },
@@ -98,23 +99,23 @@ const Navbar = () => {
             textDecoration: 'none'
           }}
         >
-          SR
+          {information.initials}
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          {pages.map(({ title, url }) => (
-            <Button
-              key={title}
-              onClick={() => console.log(url)}
-              sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              {title}
-            </Button>
+          {information.pages.map(({ title, url }) => (
+            <Link key={title} href={ url }>
+              <Button
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {title}
+              </Button>
+            </Link>
           ))}
         </Box>
         <Box sx={{ flexGrow: 0, mr: '2rem' }}>
           <Tooltip title="Informações Pessoais">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Sandy Ramos" src="https://media.licdn.com/dms/image/D4D03AQH3Egups8_h5A/profile-displayphoto-shrink_800_800/0/1698688879682?e=1712793600&v=beta&t=wME_26dD75yUd1oFDx8iAfKNb7g6rJxrTsnOzGdR0dk" />
+              <Avatar alt={`${information.firstName} ${information.surname}`} src={ information.avatarUrl } />
             </IconButton>
           </Tooltip>
           <Menu
@@ -133,9 +134,11 @@ const Navbar = () => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {socialPages.map(({ title, url }) => (
-              <MenuItem key={title} onClick={() => console.log(url)}>
-                <Typography textAlign="center">{title}</Typography>
+            {information.socialPages.map(({ title, url }) => (
+              <MenuItem key={title}>
+                <a href={url} target="_blank">
+                  <Typography textAlign="center">{title}</Typography>
+                </a>
               </MenuItem>
             ))}
           </Menu>
